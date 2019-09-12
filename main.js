@@ -23,9 +23,7 @@ const todo_template = `
 function createElementFromHTML(htmlString) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
-  
-    // Change this to div.childNodes to support multiple top-level nodes
-    return div.firstChild; 
+      return div.firstChild; 
   }
 
 function remove_list() {

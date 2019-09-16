@@ -1,17 +1,10 @@
 let a=1;
 const TODO_POSTFIX = "_todolist";
 const INPUT_POSTFIX = "_input";
-
+const BUTTON_POSTFIX = "_button";
 function create() {
     
     const todoId = a;
-
-
-    // let div = createOuterDiv(todoId);
-    // let inputBox = createInput(div);
-    // let addBtn = createButton(div, getAddItemFn(todoId));
-    // let removeBtn = createButton(div);
-
     let div1=document.createElement('div');
     div1.setAttribute("id",a.toString());
     document.body.appendChild(div1);
@@ -29,28 +22,31 @@ function create() {
     
     b1.innerHTML="add";
     b2.innerHTML="remove";
-    b1.addEventListener("click", getAddItemFn(todoId));
-    b1.setAttribute("id",todoId + INPUT_POSTFIX)
+    let addFn = getAddItemFn(todoId);
+    b1.addEventListener("click", addFn)
+    inp.addEventListener("keydown",function(e){
+        if(e.keyCode==13){
+            addFn();
+        }
+    });
+    
+ 
+    b1.setAttribute("id",todoId + BUTTON_POSTFIX)
     b2.addEventListener("click", getRemoveItemFn(todoId));
-}
-function enter(input){
-    input.addEventListener("keyup",function(event){
-    if(event.keyCode===13){
-        event.preventDefault();
-        document.getElementById(parentId + INPUT_POSTFIX).click();
-    }
-})
 }
 
 function getAddItemFn(parentId) {
     return function(e) {
         var x = document.getElementById(parentId + INPUT_POSTFIX);
-       
-        var t = document.createTextNode(x.value);
-        var cr = document.createElement("li");
-        cr.setAttribute("id",x)
-        cr.appendChild(t);
-        document.getElementById(parentId + TODO_POSTFIX).appendChild(cr);    
+        if (x.value !== "") {
+             var t = document.createTextNode(x.value);
+             var cr = document.createElement("li");
+             cr.setAttribute("id",x)
+             cr.appendChild(t);
+             document.getElementById(parentId + TODO_POSTFIX).appendChild(cr);
+             console.log(x); 
+             x.value="";
+        }
     }
 }
 
@@ -60,3 +56,7 @@ function getRemoveItemFn(parentId){
         r.removeChild(r.childNodes[0])
     }
 }
+
+
+
+create();
